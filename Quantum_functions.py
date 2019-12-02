@@ -51,14 +51,18 @@ def inverse(program):
 			invp += H(line[1])
 		elif line[0]=="CNOT":
 			invp += CNOT(line[1], line[2])
+		elif line[0]=="CCNOT":
+			invp += CCNOT(line[1], line[2], line[3])
 		elif line[0]=="CPHASE":
 			invp += CPHASE(-line[1], line[2], line[3])
-		#TODO: add all quantum gates to this
+		else:
+			raise NotImplimentedError("Gate's inverse not implimented")
+		#TODO add all quantum gates to this
 	
 	return invp
 
 def bell(*qbits):
-	#Creates a bell state between given qbits.
+	#Creates a bell state between any number of given qbits.
 	p = Program()
 	p += H(qbits[0])
 	for i in range(1, len(qbits)):
@@ -68,6 +72,7 @@ def bell(*qbits):
 def QFT(*qbits):
 	#Quantum fourier transform on given qbits.
 	#It's recursive, so you can't have more than ~1000 qbits. Sorry.
+	#TODO use loops NOT recursion
 	qbits = list(qbits)
 	n = len(qbits)
 	π = np.pi
@@ -83,6 +88,7 @@ def QFT(*qbits):
 
 def IQFT(*qbits):
 	#you could use inverse(QFT()), but this is slightly faster, and it is shorter to type.
+	#TODO use loops not recursion
 	qbits = list(qbits)
 	n = len(qbits)
 	π = np.pi
