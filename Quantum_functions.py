@@ -4,6 +4,7 @@ from pyquil.gates import *
 from pyquil.api import local_qvm
 
 def get_lines_as_list(program):
+	"""This is not intended to be used."""
 	#This is only used for inverse(). I'm sure there is a better way to do this.
 	p = str(program)
 	line = ""
@@ -32,7 +33,7 @@ def get_lines_as_list(program):
 	return lines
 
 def inverse(program):
-	#Gives the inverse of any quantum program
+	"""returns the inverse of a quantum program."""
 	invp = Program()
 	program = get_lines_as_list(program)
 	#The inverse of (A)...(Y)(Z) is (Z^-1)(Y^-1)...(A^-1)
@@ -62,7 +63,7 @@ def inverse(program):
 	return invp
 
 def bell(*qbits):
-	#Creates a bell state between any number of given qbits.
+	"""Creates a bell state between any number of given qbits."""
 	p = Program()
 	p += H(qbits[0])
 	for i in range(1, len(qbits)):
@@ -70,7 +71,7 @@ def bell(*qbits):
 	return p
 
 def QFT(*qbits):
-	#Quantum fourier transform on given qbits.
+	"""The Quantum Fourier Transform (QFT) on given qbits."""
 	#It's recursive, so you can't have more than ~1000 qbits. Sorry.
 	#TODO use loops NOT recursion
 	qbits = list(qbits)
@@ -87,6 +88,7 @@ def QFT(*qbits):
 	return p
 
 def IQFT(*qbits):
+	"""The Inverse Quantum Fourier Transform (IQFT) on given qbits."""
 	#you could use inverse(QFT()), but this is slightly faster, and it is shorter to type.
 	#TODO use loops not recursion
 	qbits = list(qbits)
@@ -102,4 +104,4 @@ def IQFT(*qbits):
 		p = p + IQFT(*qbits[:-1])
 	return p
 
-#I am going to add more in the future, possibly stuff with grover's and shor's algorithm.
+#I am going to add more in the future, possibly stuff with grover's and/or shor's algorithm.
